@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    /* Disabilita lo scorrimento orizzontale */
+    font-family: Arial, sans-serif;
+    /* Font leggibile e moderno */
+    background-color: #f8f9fa;
+    /* Sfondo chiaro per un migliore contrasto */
+}
+
+h1,
+p, .article-image  {
+    caret-color: transparent;
+    /* Nasconde il cursore */
+    outline: none;
+    /* Rimuove i bordi del focus */
+    user-select: none;
+    /* Disabilita la selezione del testo se necessario */
+}
+
+.article-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* Assicura che il contenuto non trabocchi */
+}
+
+.article-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.article-content {
+    margin-top: 20px;
+    overflow: hidden;
+    /* Assicura che il contenuto sia visibile solo entro il contenitore */
+}
+
+.section-title h2 {
+    font-size: 24px;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.section-content p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.article-categories ul {
+    list-style: none;
+    padding: 0;
+}
+
+.article-categories li {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
