@@ -10,7 +10,8 @@ body {
 }
 
 h1,
-p, .article-image  {
+p,
+.article-image {
     caret-color: transparent;
     /* Nasconde il cursore */
     outline: none;
@@ -67,4 +68,20 @@ p, .article-image  {
     font-size: 14px;
     color: #333;
     margin-bottom: 5px;
+}
+
+.back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #217dbb;
 }

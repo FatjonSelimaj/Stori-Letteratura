@@ -1,0 +1,35 @@
+.article-detail {
+    padding: 20px;
+    text-align: center;
+}
+
+.article-detail img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.article-detail h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.article-detail p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #2980b9;
+}

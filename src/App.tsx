@@ -1,23 +1,30 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import "./styles/App.css";
 import Home from "./pages/Home";
 import ArticlesPage from "./pages/ArticlePage";
 import ArticleDetail from "./pages/ArticleDetail";
+import PersonaggiStorici from "./components/PersonaggiStorici";
+import PersonaggioDettaglio from "./pages/PersonaggioDettaglio";
+import OpereLetterarie from "./components/OpereLetterarie";
+import OperaDettaglio from "./pages/OperaDettaglio";
+import EventiStorici from "./components/EventiStorici";
+import EventoDettaglio from "./pages/EventiDetaglio";
+
+// Componente per il bottone "Torna alla Home"
+const BackToHomeButton: React.FC = () => {
+  const navigate = useNavigate();
+  return (
+    <button className="back-to-home" onClick={() => navigate("/")}>
+      Torna alla Home
+    </button>
+  );
+};
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* Menu fisso in alto */}
-        <nav className="App-nav">
-          <Link to="/" className="App-link">
-            Home
-          </Link>
-          <Link to="/articles" className="App-link">
-            Articles
-          </Link>
-        </nav>
         <header className="App-header">
           <h1 className="App-title">Benvenuti su Storia e Letteratura</h1>
           <p className="App-subtitle">
@@ -29,9 +36,16 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/articles/:pageid" element={<ArticleDetail />} />
+            <Route path="/personaggi-storici" element={<PersonaggiStorici />} />
+            <Route path="/personaggi-storici/:pageid" element={<PersonaggioDettaglio />} />
+            <Route path="/opere-letterarie" element={<OpereLetterarie />} />
+            <Route path="/opere-letterarie/:pageid" element={<OperaDettaglio />} />
+            <Route path="/eventi-storici" element={<EventiStorici />} />
+            <Route path="/eventi-storici/:pageid" element={<EventoDettaglio />} />
           </Routes>
         </main>
         <footer className="App-footer">
+          <BackToHomeButton />
           <p>© {new Date().getFullYear()} Storia e Letteratura. Tutti i diritti riservati.</p>
         </footer>
       </div>

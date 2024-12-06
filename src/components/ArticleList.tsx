@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./ArticleList.css";
+import "../styles/ArticleList.css";
 
-type Article = {
+export type Article = {
   title: string;
   snippet: string;
   pageid: number;

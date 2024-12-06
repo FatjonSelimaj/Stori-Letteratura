@@ -1,58 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { searchWikipediaArticles } from "../services/wikipedia";
-import ArticleList from "../components/ArticleList";
-import "./Home.css";
-
-type Article = {
-  title: string;
-  snippet: string;
-  pageid: number;
-};
+import React from "react";
+import { Link } from "react-router-dom";
+import "../styles/Home.css";
 
 const Home: React.FC = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchInitialArticles = async () => {
-      setLoading(true);
-      try {
-        const initialArticles = await searchWikipediaArticles("Dante Alighieri");
-        setArticles(initialArticles);
-      } catch (err) {
-        setError("Errore durante il caricamento iniziale degli articoli.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInitialArticles();
-  }, []);
-
   return (
     <div className="home-container">
       <header className="home-header">
-        <h1>Storia e Letteratura</h1>
-        <p>Scopri articoli affascinanti sui grandi personaggi e gli eventi della storia.</p>
+        <h1>𝓢𝓽𝓸𝓻𝓲𝓪 𝓔 𝓛𝓮𝓽𝓽𝓮𝓻𝓪𝓽𝓾𝓻𝓪</h1>
+        <p>Scopri i grandi protagonisti e gli eventi che hanno plasmato la nostra cultura.</p>
       </header>
+
       <main className="home-content">
-        {error && (
-          <p className="home-error">{error}</p>
-        )}
-        {loading ? (
-          <div className="loading-spinner">
-            <div className="spinner"></div>
-            <p>Caricamento in corso...</p>
+        {/* Banner */}
+        <div className="home-banner">
+          <img
+            src="/image/logo.jpg"
+            alt="Storia e Letteratura"
+            className="home-banner-image"
+          />
+          <blockquote>
+            <p>"Non c'è storia senza memoria, né letteratura senza anima."</p>
+            <cite>- Anonimo</cite>
+          </blockquote>
+        </div>
+
+        {/* Sezioni tematiche */}
+        <div className="home-sections">
+          <div className="home-section">
+            <h2>Personaggi Storici</h2>
+            <p>Esplora le vite di uomini e donne che hanno cambiato il mondo.</p>
+            <Link to="/personaggi-storici" className="home-link">
+              Scopri di più
+            </Link>
           </div>
-        ) : (
-          <ArticleList/>
-        )}
-        {!loading && !articles.length && (
-          <p className="home-no-articles">
-            Nessun articolo trovato.
-          </p>
-        )}
+          <div className="home-section">
+            <h2>Opere Letterarie</h2>
+            <p>Immergiti nei capolavori della letteratura mondiale.</p>
+            <Link to="/opere-letterarie" className="home-link">
+              Esplora ora
+            </Link>
+          </div>
+          <div className="home-section">
+            <h2>Lista Articoli</h2>
+            <p>Consulta una lista completa di articoli e approfondimenti.</p>
+            <Link to="/articles" className="home-link">
+              Visualizza articoli
+            </Link>
+          </div>
+          <div className="home-section">
+            <h2>Eventi Storici</h2>
+            <p>Ripercorri gli eventi che hanno segnato l'umanità.</p>
+            <Link to="/eventi-storici" className="home-link">
+              Scopri di più
+            </Link>
+          </div>
+
+        </div>
       </main>
     </div>
   );

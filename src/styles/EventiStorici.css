@@ -1,0 +1,52 @@
+.cards-container {
+    padding: 20px;
+}
+
+.cards-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    /* Spaziatura predefinita */
+}
+
+/* Aumenta lo spazio tra le card per schermi più grandi */
+@media (min-width: 1024px) {
+    .cards-list {
+        gap: 30px;
+        /* Maggiore spaziatura su schermi ampi */
+    }
+}
+
+@media (min-width: 1440px) {
+    .cards-list {
+        gap: 40px;
+        /* Ancora maggiore per schermi ultra larghi */
+    }
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+}
+
+.card-link {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./ArticleDetail.css";
+import "../styles/ArticleDetail.css";
 
 type Article = {
   title: string;
@@ -41,6 +41,8 @@ const ArticleDetail: React.FC = () => {
   const { pageid } = useParams<{ pageid: string }>();
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate(); // Inizializza navigate
+
 
   useEffect(() => {
     const fetchArticleDetails = async () => {
@@ -70,8 +72,8 @@ const ArticleDetail: React.FC = () => {
           image: page.original?.source || "",
           categories: page.categories
             ? page.categories.map((cat: any) =>
-                cat.title.replace("Category:", "")
-              )
+              cat.title.replace("Category:", "")
+            )
             : [],
         });
       } catch (error) {
@@ -102,6 +104,9 @@ const ArticleDetail: React.FC = () => {
 
   return (
     <div className="article-detail">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        Torna indietro
+      </button>
       <h1>{article.title}</h1>
       {article.image && (
         <img
@@ -111,7 +116,6 @@ const ArticleDetail: React.FC = () => {
         />
       )}
       <div className="article-content">{formatContent(article.content)}</div>
-      
     </div>
   );
 };
