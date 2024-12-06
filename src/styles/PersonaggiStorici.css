@@ -2,56 +2,58 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
 }
 
 .cards-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+    padding: 20px;
 }
 
 .card {
-    background: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
     padding: 20px;
+    color: white;
     text-align: left;
+}
+
+/* Colori distintivi per le card */
+.card.seconda-guerra {
+    background-color: #dc3545; /* Rosso */
+}
+
+.card.rivoluzione-francese {
+    background-color: #ffc107; /* Giallo */
+}
+
+.card.scoperta-america {
+    background-color: #17a2b8; /* Blu chiaro */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .card h2 {
     font-size: 1.5rem;
-    color: #2c3e50;
+    margin-bottom: 10px;
 }
 
 .card p {
     font-size: 1rem;
-    color: #7f8c8d;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 
 .card-link {
     text-decoration: none;
-    color: #3498db;
+    color: blue;
     font-weight: bold;
 }
 
 .card-link:hover {
     text-decoration: underline;
-}
-
-.back-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.back-button:hover {
-    background-color: #217dbb;
 }
