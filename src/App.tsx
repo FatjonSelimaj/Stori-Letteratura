@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { FaYoutube, FaInstagram, FaFacebook } from "react-icons/fa";
 import "./styles/App.css";
 import Home from "./pages/Home";
 import ArticlesPage from "./pages/ArticlePage";
@@ -16,7 +17,6 @@ const BackToHomeButton: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Non mostrare il bottone nella Home
   if (location.pathname === "/") {
     return null;
   }
@@ -35,15 +35,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {/* Mostra "Benvenuti" e "Esplora" solo nella Home */}
-        {location.pathname === "/" && (
-          <>
-            <h1 className="App-title">Benvenuti su Storia e Letteratura</h1>
-            <p className="App-subtitle">
-              Esplora articoli e approfondimenti letterari e storici
-            </p>
-          </>
-        )}
+        {location.pathname === "/" && <h1>Benvenuti su Storia e Letteratura</h1>}
         <BackToHomeButton />
       </header>
       <main className="App-content">
@@ -61,6 +53,17 @@ const AppContent: React.FC = () => {
       </main>
       <footer className="App-footer">
         <p>© {new Date().getFullYear()} Storia e Letteratura. Tutti i diritti riservati.</p>
+        <div className="social-links">
+          <a href="https://youtube.com/@storiarletteratura?si=s4WrmdEfTlOoBddg" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <FaYoutube className="social-icon youtube" />
+          </a>
+          <a href="https://www.instagram.com/storia.letteratura?igsh=MXRzZHY1dHNpbWo2Mw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <FaInstagram className="social-icon instagram" />
+          </a>
+          <a href="https://www.facebook.com/share/5CRUGhzH5SYj4iiL/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <FaFacebook className="social-icon facebook" />
+          </a>
+        </div>
       </footer>
     </div>
   );

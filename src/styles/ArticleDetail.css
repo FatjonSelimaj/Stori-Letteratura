@@ -33,8 +33,9 @@ p,
 
 .article-image {
     width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+    height: auto; /* Mantiene il rapporto d'aspetto */
+    max-height: 400px; /* Altezza massima per evitare che occupi troppo spazio */
+    object-fit: contain; /* Assicura che l'intera immagine sia visibile senza tagli */
     margin-bottom: 20px;
     border-radius: 8px;
 }
@@ -84,4 +85,33 @@ p,
 
 .back-button:hover {
     background-color: #217dbb;
+}
+
+.article-summary,
+.article-key-points,
+.article-timeline,
+.article-related-links {
+  margin-top: 20px;
+}
+
+.article-key-points ul,
+.article-timeline ul,
+.article-related-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.article-key-points li,
+.article-timeline li,
+.article-related-links li {
+  margin-bottom: 10px;
+}
+
+.article-related-links a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.article-related-links a:hover {
+  text-decoration: underline;
 }

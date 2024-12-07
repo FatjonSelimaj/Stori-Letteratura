@@ -33,3 +33,12 @@
 .back-button:hover {
     background-color: #2980b9;
 }
+
+.article-image {
+    width: 100%;
+    height: auto; /* Mantiene il rapporto d'aspetto */
+    max-height: 400px; /* Altezza massima per evitare che occupi troppo spazio */
+    object-fit: contain; /* Assicura che l'intera immagine sia visibile senza tagli */
+    margin-bottom: 20px;
+    border-radius: 8px;
+}

@@ -56,3 +56,47 @@
 .back-to-home:active {
   background-color: #1c598a;
 }
+
+.App-footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.social-links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-icon {
+  font-size: 2rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.social-icon.youtube {
+  color: #ff0000;
+}
+
+.social-icon.youtube:hover {
+  color: #cc0000;
+}
+
+.social-icon.instagram {
+  color: #e1306c;
+}
+
+.social-icon.instagram:hover {
+  color: #b32b5f;
+}
+
+.social-icon.facebook {
+  color: #1877f2;
+}
+
+.social-icon.facebook:hover {
+  color: #145db7;
+}
