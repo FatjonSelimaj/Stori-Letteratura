@@ -21,24 +21,39 @@
 }
 
 .back-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #fff;
+    background-color: #0056b3;
+    /* Un blu più scuro per migliore contrasto */
+    color: #ffffff;
+    /* Testo bianco */
     border: none;
+    padding: 10px 20px;
+    font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .back-button:hover {
-    background-color: #2980b9;
+    background-color: #003f7f;
+    /* Ancora più scuro al passaggio del mouse */
+    color: #ffffff;
+    /* Mantieni testo bianco */
+}
+
+.back-button:focus {
+    outline: 2px solid #ffffff;
+    /* Contorno visibile per accessibilità */
+    outline-offset: 2px;
 }
 
 .article-image {
     width: 100%;
-    height: auto; /* Mantiene il rapporto d'aspetto */
-    max-height: 400px; /* Altezza massima per evitare che occupi troppo spazio */
-    object-fit: contain; /* Assicura che l'intera immagine sia visibile senza tagli */
+    height: auto;
+    /* Mantiene il rapporto d'aspetto */
+    max-height: 400px;
+    /* Altezza massima per evitare che occupi troppo spazio */
+    object-fit: contain;
+    /* Assicura che l'intera immagine sia visibile senza tagli */
     margin-bottom: 20px;
     border-radius: 8px;
 }

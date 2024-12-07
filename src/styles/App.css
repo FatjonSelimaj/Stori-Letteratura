@@ -34,23 +34,24 @@
 }
 
 .back-to-home {
-  display: inline-block;
-  background-color: #3498db;
-  color: white;
+  background-color: #0056b3; /* Un blu più scuro per migliore contrasto */
+  color: #ffffff; /* Testo bianco */
   border: none;
-  border-radius: 5px;
   padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 16px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  margin: 20px auto;
-  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .back-to-home:hover {
-  background-color: #2980b9;
-  transform: translateY(-3px);
+  background-color: #003f7f; /* Ancora più scuro al passaggio del mouse */
+  color: #ffffff; /* Mantieni testo bianco */
+}
+
+.back-to-home:focus {
+  outline: 2px solid #ffffff; /* Contorno visibile per accessibilità */
+  outline-offset: 2px;
 }
 
 .back-to-home:active {
