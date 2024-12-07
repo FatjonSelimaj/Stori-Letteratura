@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { FaYoutube, FaInstagram, FaFacebook } from "react-icons/fa";
+import { FaYoutube, FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 import "./styles/App.css";
 import Home from "./pages/Home";
 import ArticlesPage from "./pages/ArticlePage";
@@ -62,6 +62,9 @@ const AppContent: React.FC = () => {
           </a>
           <a href="https://www.facebook.com/share/5CRUGhzH5SYj4iiL/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <FaFacebook className="social-icon facebook" />
+          </a>
+          <a href="https://www.tiktok.com/@fatjon.selima?_t=8pX8jPc9uT2&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <FaTiktok className="social-icon tiktok" />
           </a>
         </div>
       </footer>

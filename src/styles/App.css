@@ -101,3 +101,11 @@
 .social-icon.facebook:hover {
   color: #145db7;
 }
+
+.social-icon.tiktok {
+  color: #000000; /* Nero, colore ufficiale di TikTok */
+}
+
+.social-icon.tiktok:hover {
+  color: #333333; /* Leggermente più chiaro quando il mouse passa sopra */
+}
