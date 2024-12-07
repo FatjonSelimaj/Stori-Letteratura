@@ -66,12 +66,12 @@ const OperaDettaglio: React.FC = () => {
 
   return (
     <div className="detail-container">
-      <h1>{opera.title}</h1>
-      {opera.image && <img src={opera.image} alt={opera.title} className="detail-image" />}
-      <p className="detail-extract">{opera.extract}</p>
       <button className="back-button" onClick={() => navigate(-1)}>
         Torna indietro
       </button>
+      <h1>{opera.title}</h1>
+      {opera.image && <img src={opera.image} alt={opera.title} className="detail-image" />}
+      <p className="detail-extract">{opera.extract}</p>
     </div>
   );
 };

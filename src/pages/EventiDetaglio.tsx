@@ -79,14 +79,14 @@ const EventoDettaglio: React.FC = () => {
 
   return (
     <div className="article-detail">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        Torna indietro
+      </button>
       <h1>{event.title}</h1>
       {event.image && (
         <img src={event.image} alt={event.title} className="article-image" />
       )}
       <p className="article-extract">{event.extract}</p>
-      <button className="back-button" onClick={() => navigate(-1)}>
-        Torna indietro
-      </button>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const PersonaggioDettaglio: React.FC = () => {
   const [article, setArticle] = useState<ArticleDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate(); // Inizializza navigate
-  
+
   useEffect(() => {
     const fetchArticleDetail = async () => {
       if (!pageid) {
@@ -78,14 +78,14 @@ const PersonaggioDettaglio: React.FC = () => {
 
   return (
     <div className="article-detail">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        Torna indietro
+      </button>
       <h1>{article.title}</h1>
       {article.image && (
         <img src={article.image} alt={article.title} className="article-image" />
       )}
       <p className="article-extract">{article.extract}</p>
-      <button className="back-button" onClick={() => navigate(-1)}>
-        Torna indietro
-      </button>
     </div>
   );
 };
