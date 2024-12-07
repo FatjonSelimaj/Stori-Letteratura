@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/EventiDetaglio.css";
+import { FaShareAlt, FaTimes, FaFacebook, FaWhatsapp, FaTwitter, FaEnvelope } from "react-icons/fa";
 
 type EventDetail = {
   title: string;
@@ -17,6 +18,7 @@ const EventoDettaglio: React.FC = () => {
   const navigate = useNavigate();
   const [event, setEvent] = useState<EventDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showSharePopup, setShowSharePopup] = useState<boolean>(false); // Stato per il popup di condivisione
 
   useEffect(() => {
     const fetchEventDetail = async () => {
@@ -48,47 +50,10 @@ const EventoDettaglio: React.FC = () => {
           return;
         }
 
-        // Estrazione contenuti completi (testo e cronologia)
-        const fullPageResponse = await axios.get("https://it.wikipedia.org/w/api.php", {
-          params: {
-            action: "parse",
-            pageid: pageid,
-            format: "json",
-            prop: "text",
-            origin: "*",
-          },
-        });
-
-        const htmlContent = fullPageResponse.data.parse?.text["*"];
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, "text/html");
-
-        // Estrazione della cronologia
-        const timelineSection = Array.from(doc.querySelectorAll("h2, h3"))
-          .find((el) => el.textContent?.toLowerCase().includes("cronologia"))
-          ?.nextElementSibling;
-        const timeline = timelineSection
-          ? Array.from(timelineSection.querySelectorAll("li"))
-              .map((li) => li.textContent?.trim())
-              .filter((item): item is string => Boolean(item)) // Filtra valori undefined
-          : [];
-
-        // Estrazione dei dettagli correlati
-        const relatedSections = Array.from(doc.querySelectorAll("h2, h3"))
-          .filter((el) => el.textContent?.toLowerCase().includes("vedi anche"))
-          .map((section) => {
-            const title = section.textContent || "Sezione correlata";
-            const content = section.nextElementSibling?.textContent || "Dettagli non disponibili.";
-            return { title, extract: content };
-          });
-
         setEvent({
           title: page.title,
           extract: page.extract || "Nessuna descrizione disponibile.",
           image: page.original?.source,
-          timeline: timeline,
-          keyPoints: timeline.slice(0, 3), // Esempio di punti chiave dai primi elementi della cronologia
-          relatedDetails: relatedSections,
         });
       } catch (error) {
         console.error("Errore durante il recupero dei dettagli:", error);
@@ -100,6 +65,30 @@ const EventoDettaglio: React.FC = () => {
 
     fetchEventDetail();
   }, [pageid]);
+
+  const handleShare = (platform: string) => {
+    const url = window.location.href;
+    const text = `Leggi questo interessante articolo: ${event?.title}`;
+    switch (platform) {
+      case "facebook":
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
+        break;
+      case "twitter":
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank");
+        break;
+      case "whatsapp":
+        window.open(`https://api.whatsapp.com/send?text=${text} ${url}`, "_blank");
+        break;
+      case "email":
+        window.location.href = `mailto:?subject=${encodeURIComponent(
+          `Articolo interessante: ${event?.title}`
+        )}&body=${encodeURIComponent(`Leggi l'articolo completo qui: ${url}`)}`;
+        break;
+      default:
+        break;
+    }
+    setShowSharePopup(false); // Chiudi il popup dopo la selezione
+  };
 
   if (loading) {
     return (
@@ -124,43 +113,38 @@ const EventoDettaglio: React.FC = () => {
         Torna indietro
       </button>
       <h1>{event.title}</h1>
-      {event.image && (
-        <img src={event.image} alt={event.title} className="article-image" />
-      )}
+      {event.image && <img src={event.image} alt={event.title} className="article-image" />}
       <p className="article-extract">{event.extract}</p>
-      {event.timeline && event.timeline.length > 0 && (
-        <div className="event-timeline">
-          <h2>Cronologia</h2>
-          <ul>
-            {event.timeline.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {event.keyPoints && event.keyPoints.length > 0 && (
-        <div className="event-key-points">
-          <h2>Punti Chiave</h2>
-          <ul>
-            {event.keyPoints.map((point, index) => (
-              <li key={index}>{point}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {event.relatedDetails && event.relatedDetails.length > 0 && (
-        <div className="event-related-details">
-          <h2>Dettagli Correlati</h2>
-          <ul>
-            {event.relatedDetails.map((detail, index) => (
-              <li key={index}>
-                <h3>{detail.title}</h3>
-                <p>{detail.extract}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+
+      {/* Icona Condividi */}
+      <div className="share-section">
+        <FaShareAlt className="share-icon" onClick={() => setShowSharePopup(true)} />
+        {showSharePopup && (
+          <div className="share-overlay">
+            <div className="share-popup">
+              <div className="share-popup-header">
+                <h3>Condividi</h3>
+                <FaTimes className="close-icon" onClick={() => setShowSharePopup(false)} />
+              </div>
+              <p>Condividi questo articolo su:</p>
+              <div className="share-options">
+                <button onClick={() => handleShare("facebook")}>
+                  <FaFacebook /> Facebook
+                </button>
+                <button onClick={() => handleShare("whatsapp")}>
+                  <FaWhatsapp /> WhatsApp
+                </button>
+                <button onClick={() => handleShare("twitter")}>
+                  <FaTwitter /> Twitter
+                </button>
+                <button onClick={() => handleShare("email")}>
+                  <FaEnvelope /> Email
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

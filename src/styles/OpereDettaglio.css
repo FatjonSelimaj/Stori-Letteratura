@@ -80,3 +80,67 @@
     margin-bottom: 20px;
     border-radius: 8px;
 }
+
+.share-section {
+    position: relative;
+    margin-top: 20px;
+}
+
+.share-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.share-icon:hover {
+    color: #3498db;
+}
+
+.share-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.share-popup {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.share-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.share-options button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.share-options button:hover {
+    color: #3498db;
+}

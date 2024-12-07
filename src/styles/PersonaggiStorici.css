@@ -22,15 +22,18 @@
 
 /* Colori distintivi per le card */
 .card.seconda-guerra {
-    background-color: #dc3545; /* Rosso */
+    background-color: #dc3545;
+    /* Rosso */
 }
 
 .card.rivoluzione-francese {
-    background-color: #ffc107; /* Giallo */
+    background-color: #ffc107;
+    /* Giallo */
 }
 
 .card.scoperta-america {
-    background-color: #17a2b8; /* Blu chiaro */
+    background-color: #17a2b8;
+    /* Blu chiaro */
 }
 
 .card:hover {
@@ -56,4 +59,106 @@
 
 .card-link:hover {
     text-decoration: underline;
+}
+
+.share-section {
+    position: relative;
+    margin-top: 20px;
+}
+
+.share-section {
+    position: relative;
+    margin-top: 20px;
+}
+
+.share-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.share-icon:hover {
+    color: #3498db;
+}
+
+.share-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.share-popup {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.share-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.share-options button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.share-options button.facebook {
+    background-color: #1877f2;
+}
+
+.share-options button.facebook:hover {
+    background-color: #145db7;
+}
+
+.share-options button.whatsapp {
+    background-color: #25d366;
+}
+
+.share-options button.whatsapp:hover {
+    background-color: #1da851;
+}
+
+.share-options button.twitter {
+    background-color: #1da1f2;
+}
+
+.share-options button.twitter:hover {
+    background-color: #188cd8;
+}
+
+.share-options button.email {
+    background-color: #6c757d;
+}
+
+.share-options button.email:hover {
+    background-color: #5a6268;
 }
