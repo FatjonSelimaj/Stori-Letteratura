@@ -1,6 +1,7 @@
 .home-container {
     font-family: "Arial", sans-serif;
     color: #333;
+    /* Colore scuro per migliorare il contrasto */
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -14,11 +15,13 @@
 .home-header h1 {
     font-size: 2.5rem;
     color: #2c3e50;
+    /* Blu scuro */
 }
 
 .home-header p {
     font-size: 1.2rem;
-    color: #7f8c8d;
+    color: #555;
+    /* Grigio scuro per migliorare il contrasto */
 }
 
 .home-banner {
@@ -36,8 +39,10 @@
     bottom: 20px;
     left: 20px;
     color: #fff;
+    /* Testo bianco per migliorare il contrasto */
     font-style: italic;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
+    /* Sfondo scuro con opacità aumentata */
     padding: 10px 20px;
     border-radius: 5px;
     transition: all 0.3s ease;
@@ -49,6 +54,8 @@
     margin-top: 5px;
     font-size: 0.9rem;
     text-align: right;
+    color: #ccc;
+    /* Colore più chiaro per il nome dell'autore */
 }
 
 .home-sections {
@@ -68,48 +75,33 @@
 .home-section h2 {
     font-size: 1.5rem;
     color: #2c3e50;
+    /* Blu scuro */
     margin-bottom: 10px;
 }
 
 .home-section p {
     font-size: 1rem;
-    color: #7f8c8d;
+    color: #555;
+    /* Grigio scuro per migliorare il contrasto */
     margin-bottom: 15px;
 }
 
 .home-section a {
     text-decoration: none;
-    color: #3498db;
+    color: #0056b3;
+    /* Blu scuro per i link */
     font-weight: bold;
-    border: 1px solid #3498db;
+    border: 1px solid #0056b3;
+    /* Bordo dello stesso colore del testo */
     padding: 5px 10px;
     border-radius: 5px;
 }
 
 .home-section a:hover {
-    background-color: #3498db;
+    background-color: #003f7f;
+    /* Colore di sfondo scuro per hover */
     color: #fff;
-}
-
-/* Aggiustamenti per il blockquote su schermi medi e piccoli */
-@media (max-width: 768px) {
-    .home-banner {
-        margin-bottom: 80px;
-        /* Spazio extra per includere il blockquote */
-    }
-
-    .home-banner blockquote {
-        position: static;
-        /* Rimuove la posizione assoluta */
-        margin-top: 10px;
-        background: rgba(0, 0, 0, 0.8);
-        /* Sfondo più scuro per contrasto */
-        text-align: center;
-        max-width: 90%;
-        margin: 10px auto;
-        /* Centra il blockquote sotto l'immagine */
-        padding: 15px 20px;
-    }
+    /* Testo bianco */
 }
 
 .search-bar {
@@ -131,7 +123,9 @@
     padding: 10px 20px;
     font-size: 16px;
     background-color: #3498db;
+    /* Blu brillante */
     color: #fff;
+    /* Testo bianco */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -139,6 +133,7 @@
 
 .search-bar button:hover {
     background-color: #217dbb;
+    /* Colore più scuro per hover */
 }
 
 .search-results {
@@ -153,10 +148,31 @@
 .search-results li {
     margin-bottom: 15px;
     cursor: pointer;
+    color: #333;
+    /* Colore del testo */
 }
 
 .search-results li:hover {
     background-color: #f0f0f0;
+    /* Sfondo più chiaro */
     padding: 5px;
     border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .home-banner {
+        margin-bottom: 80px;
+    }
+
+    .home-banner blockquote {
+        position: static;
+        /* Posizionamento fluido */
+        margin-top: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        /* Sfondo più scuro */
+        text-align: center;
+        max-width: 90%;
+        margin: 10px auto;
+        padding: 15px 20px;
+    }
 }
