@@ -4,55 +4,82 @@ import axios from "axios";
 import "../styles/OpereDettaglio.css";
 import { FaShareAlt, FaTimes, FaFacebook, FaWhatsapp, FaTwitter, FaEnvelope } from "react-icons/fa";
 
-type OperaDetail = {
-  title: string;
-  extract: string;
-  image?: string;
+const cleanHTML = (html: string): string => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+
+  // Rimuove i link "modifica"
+  doc.querySelectorAll('a[href*="action=edit"]').forEach((el) => el.remove());
+  doc.querySelectorAll("a").forEach((el) => {
+    if (el.textContent?.toLowerCase().includes("modifica")) {
+      el.remove();
+    }
+  });
+
+  // Disabilita tutti i link rendendoli non cliccabili
+  doc.querySelectorAll("a").forEach((link) => {
+    link.removeAttribute("href");
+    link.style.pointerEvents = "none";
+    link.style.color = "#888";
+    link.style.textDecoration = "none";
+    link.style.cursor = "default";
+  });
+
+  return doc.body.innerHTML;
 };
 
 const OperaDettaglio: React.FC = () => {
   const { pageid } = useParams<{ pageid: string }>();
-  const [opera, setOpera] = useState<OperaDetail | null>(null);
+  const [operaHTML, setOperaHTML] = useState<string | null>(null);
+  const [title, setTitle] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showSharePopup, setShowSharePopup] = useState<boolean>(false); // Stato per gestire il popup di condivisione
+  const [error, setError] = useState<string | null>(null);
+  const [showSharePopup, setShowSharePopup] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchOperaDetail = async () => {
+    if (!pageid) {
+      setError("Nessun ID opera fornito.");
+      setLoading(false);
+      return;
+    }
+
+    const fetchOperaDetails = async () => {
       try {
+        setLoading(true);
+        setError(null);
+
         const response = await axios.get("https://it.wikipedia.org/w/api.php", {
           params: {
-            action: "query",
+            action: "parse",
             format: "json",
-            prop: "extracts|pageimages",
-            exintro: true,
-            explaintext: true,
-            pageids: pageid,
-            piprop: "original",
+            pageid: pageid,
             origin: "*",
+            prop: "text|displaytitle",
           },
         });
 
-        const page = response.data.query.pages[pageid || ""];
-        setOpera({
-          title: page.title,
-          extract: page.extract,
-          image: page.original?.source,
-        });
+        const page = response.data.parse;
+        if (!page) {
+          setError("Opera non trovata.");
+        } else {
+          setTitle(page.title);
+          setOperaHTML(cleanHTML(page.text["*"]));
+        }
       } catch (error) {
-        console.error("Errore durante il recupero del dettaglio:", error);
-        setOpera(null);
+        console.error("Errore durante il recupero dell'opera:", error);
+        setError("Impossibile caricare l'opera.");
       } finally {
         setLoading(false);
       }
     };
 
-    if (pageid) fetchOperaDetail();
+    fetchOperaDetails();
   }, [pageid]);
 
   const handleShare = (platform: string) => {
     const url = window.location.href;
-    const text = `Leggi questa interessante opera: ${opera?.title}`;
+    const text = `Leggi questa interessante opera: ${title}`;
     switch (platform) {
       case "facebook":
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
@@ -65,13 +92,13 @@ const OperaDettaglio: React.FC = () => {
         break;
       case "email":
         window.location.href = `mailto:?subject=${encodeURIComponent(
-          `Opera interessante: ${opera?.title}`
+          `Opera interessante: ${title}`
         )}&body=${encodeURIComponent(`Leggi l'opera completa qui: ${url}`)}`;
         break;
       default:
         break;
     }
-    setShowSharePopup(false); // Chiudi il popup dopo la selezione
+    setShowSharePopup(false);
   };
 
   if (loading) {
@@ -82,10 +109,11 @@ const OperaDettaglio: React.FC = () => {
     );
   }
 
-  if (!opera) {
+  if (error) {
     return (
-      <div className="no-detail">
-        <p>Dettagli non disponibili.</p>
+      <div className="error">
+        <p>{error}</p>
+        <button onClick={() => navigate(-1)}>Torna indietro</button>
       </div>
     );
   }
@@ -95,11 +123,12 @@ const OperaDettaglio: React.FC = () => {
       <button className="back-button" onClick={() => navigate(-1)}>
         Torna indietro
       </button>
-      <h1>{opera.title}</h1>
-      {opera.image && <img src={opera.image} alt={opera.title} className="detail-image" />}
-      <p className="detail-extract">{opera.extract}</p>
+      <h1>{title}</h1>
+      <div
+        className="detail-content"
+        dangerouslySetInnerHTML={{ __html: operaHTML || "" }}
+      />
 
-      {/* Icona Condividi */}
       <div className="share-section">
         <FaShareAlt className="share-icon" onClick={() => setShowSharePopup(true)} />
         {showSharePopup && (

@@ -2,83 +2,73 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    /* Disabilita lo scorrimento orizzontale */
     font-family: Arial, sans-serif;
-    /* Font leggibile e moderno */
     background-color: #f8f9fa;
-    /* Sfondo chiaro per un migliore contrasto */
 }
 
 h1,
 p,
 .article-image {
     caret-color: transparent;
-    /* Nasconde il cursore */
     outline: none;
-    /* Rimuove i bordi del focus */
     user-select: none;
-    /* Disabilita la selezione del testo se necessario */
 }
 
 .article-detail {
-    max-width: 800px;
+    max-width: 850px;
     margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background-color: #fdfdfd;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    /* Assicura che il contenuto non trabocchi */
 }
 
 .article-image {
     width: 100%;
     height: auto;
-    /* Mantiene il rapporto d'aspetto */
     max-height: 400px;
-    /* Altezza massima per evitare che occupi troppo spazio */
     object-fit: contain;
-    /* Assicura che l'intera immagine sia visibile senza tagli */
-    margin-bottom: 20px;
-    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
 }
 
 .article-content {
-    margin-top: 20px;
-    overflow: hidden;
-    /* Assicura che il contenuto sia visibile solo entro il contenitore */
-}
-
-.section-title h2 {
-    font-size: 24px;
-    margin-top: 20px;
-    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.8;
     color: #333;
+    word-wrap: break-word;
+    text-align: justify;
+    margin-bottom: 20px;
 }
 
-.section-content p {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.6;
+.article-content h2 {
+    font-size: 22px;
+    color: #0056b3;
+    margin-top: 25px;
     margin-bottom: 15px;
 }
 
-.article-categories ul {
-    list-style: none;
-    padding: 0;
+.article-content p,
+.article-content ul,
+.article-content ol {
+    margin-bottom: 20px;
 }
 
-.article-categories li {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 5px;
+.article-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.article-content ol {
+    list-style-type: decimal;
+    margin-left: 20px;
 }
 
 .back-button {
     background-color: #0056b3;
-    /* Un blu più scuro per migliore contrasto */
     color: #ffffff;
-    /* Testo bianco */
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -89,95 +79,7 @@ p,
 
 .back-button:hover {
     background-color: #003f7f;
-    /* Ancora più scuro al passaggio del mouse */
     color: #ffffff;
-    /* Mantieni testo bianco */
-}
-
-.back-button:focus {
-    outline: 2px solid #ffffff;
-    /* Contorno visibile per accessibilità */
-    outline-offset: 2px;
-}
-
-.article-summary,
-.article-key-points,
-.article-timeline,
-.article-related-links {
-    margin-top: 20px;
-}
-
-.article-key-points ul,
-.article-timeline ul,
-.article-related-links ul {
-    list-style: none;
-    padding: 0;
-}
-
-.article-key-points li,
-.article-timeline li,
-.article-related-links li {
-    margin-bottom: 10px;
-}
-
-.article-related-links a {
-    color: #3498db;
-    text-decoration: none;
-}
-
-.article-related-links a:hover {
-    text-decoration: underline;
-}
-
-.share-section {
-    margin-top: 20px;
-    position: relative;
-}
-
-.share-icon {
-    font-size: 2rem;
-    color: #333;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.share-icon:hover {
-    color: #3498db;
-}
-
-.share-popup {
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    padding: 20px;
-}
-
-.share-popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.share-popup-header h3 {
-    font-size: 1.2rem;
-    margin: 0;
-}
-
-.close-icon {
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #333;
-}
-
-.close-icon:hover {
-    color: #ff0000;
 }
 
 .share-section {
@@ -203,20 +105,20 @@ p,
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Sfondo semi-trasparente */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    /* Porta il popup sopra ogni altro elemento */
 }
 
 .share-popup {
     background: #fff;
     border-radius: 10px;
-    width: 300px;
-    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    padding: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .share-popup-header {
@@ -227,18 +129,19 @@ p,
 }
 
 .share-popup-header h3 {
-    font-size: 1.2rem;
+    font-size: 20px;
     margin: 0;
+    color: #333;
 }
 
 .close-icon {
     font-size: 1.5rem;
     cursor: pointer;
-    color: #333;
+    color: #888;
 }
 
 .close-icon:hover {
-    color: #ff0000;
+    color: #0056b3;
 }
 
 .share-options {
@@ -250,20 +153,117 @@ p,
 .share-options button {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     background-color: #f9f9f9;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     font-size: 1rem;
+    font-weight: bold;
 }
 
 .share-options button:hover {
     background-color: #eaeaea;
+    transform: translateY(-3px);
 }
 
-.share-options svg {
-    font-size: 1.2rem;
+.share-options button:nth-child(1) {
+    color: #1877f2;
+}
+
+.share-options button:nth-child(2) {
+    color: #25d366;
+}
+
+.share-options button:nth-child(3) {
+    color: #1da1f2;
+}
+
+.share-options button:nth-child(4) {
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .article-detail {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .share-popup {
+        width: 95%;
+    }
+
+    .share-options button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+/* Stile generale per le tabelle */
+.article-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.article-content th,
+.article-content td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.article-content th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.article-content td {
+    background-color: #fff;
+}
+
+/* Stile responsivo per le tabelle su schermi piccoli */
+@media (max-width: 768px) {
+    .article-content table {
+        display: block;
+        /* Trasforma la tabella in un blocco scrollabile */
+        overflow-x: auto;
+        /* Abilita lo scorrimento orizzontale */
+        white-space: nowrap;
+        /* Impedisce la rottura di righe nelle celle */
+    }
+
+    .article-content th,
+    .article-content td {
+        display: block;
+        /* Mostra le celle come blocchi per impilare i contenuti */
+        text-align: left;
+        width: 100%;
+        /* Ogni cella occupa l'intera larghezza */
+        box-sizing: border-box;
+        /* Include padding e bordi nella larghezza */
+    }
+
+    .article-content th {
+        background-color: #e9ecef;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .article-content tr {
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .article-content td::before {
+        content: attr(data-label);
+        /* Mostra l'intestazione accanto ai dati */
+        font-weight: bold;
+        display: inline-block;
+        width: 120px;
+        /* Larghezza delle etichette per i dati */
+        color: #333;
+    }
 }

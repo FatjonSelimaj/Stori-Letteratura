@@ -1,80 +1,97 @@
-.cards-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
 }
 
-.cards-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
+h1,
+p,
+.article-image {
+    caret-color: transparent;
+    outline: none;
+    user-select: none;
 }
 
-.card {
+.article-detail {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fdfdfd;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.article-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    padding: 20px;
-    color: white;
-    text-align: left;
 }
 
-/* Colori distintivi per le card */
-.card.seconda-guerra {
-    background-color: #dc3545;
-    /* Rosso */
+.article-content {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    word-wrap: break-word;
+    text-align: justify;
+    margin-bottom: 20px;
 }
 
-.card.rivoluzione-francese {
-    background-color: #ffc107;
-    /* Giallo */
+.article-content h2 {
+    font-size: 22px;
+    color: #0056b3;
+    margin-top: 25px;
+    margin-bottom: 15px;
 }
 
-.card.scoperta-america {
-    background-color: #17a2b8;
-    /* Blu chiaro */
+.article-content p,
+.article-content ul,
+.article-content ol {
+    margin-bottom: 20px;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.article-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
 }
 
-.card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+.article-content ol {
+    list-style-type: decimal;
+    margin-left: 20px;
 }
 
-.card p {
-    font-size: 1rem;
-    margin-bottom: 10px;
+.back-button {
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.card-link {
-    text-decoration: none;
-    color: blue;
-    font-weight: bold;
-}
-
-.card-link:hover {
-    text-decoration: underline;
-}
-
-.share-section {
-    position: relative;
-    margin-top: 20px;
+.back-button:hover {
+    background-color: #003f7f;
+    color: #ffffff;
 }
 
 .share-section {
-    position: relative;
     margin-top: 20px;
+    position: relative;
 }
 
 .share-icon {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    color: #333;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 
 .share-icon:hover {
@@ -85,21 +102,22 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .share-popup {
     background: #fff;
-    padding: 20px;
     border-radius: 10px;
     width: 90%;
     max-width: 400px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
@@ -107,58 +125,121 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+}
+
+.share-popup-header h3 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
 }
 
 .close-icon {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    color: #888;
+}
+
+.close-icon:hover {
+    color: #0056b3;
+}
+
+.share-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .share-options button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-    font-size: 1rem;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: #fff;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1rem;
     font-weight: bold;
-    transition: background 0.3s;
 }
 
-.share-options button.facebook {
-    background-color: #1877f2;
+.share-options button:hover {
+    background-color: #eaeaea;
+    transform: translateY(-3px);
 }
 
-.share-options button.facebook:hover {
-    background-color: #145db7;
+.share-options button:nth-child(1) {
+    color: #1877f2;
 }
 
-.share-options button.whatsapp {
-    background-color: #25d366;
+.share-options button:nth-child(2) {
+    color: #25d366;
 }
 
-.share-options button.whatsapp:hover {
-    background-color: #1da851;
+.share-options button:nth-child(3) {
+    color: #1da1f2;
 }
 
-.share-options button.twitter {
-    background-color: #1da1f2;
+.share-options button:nth-child(4) {
+    color: #555;
 }
 
-.share-options button.twitter:hover {
-    background-color: #188cd8;
+/* Stile generale per le tabelle */
+.article-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-x: auto;
 }
 
-.share-options button.email {
-    background-color: #6c757d;
+.article-content th,
+.article-content td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
 }
 
-.share-options button.email:hover {
-    background-color: #5a6268;
+.article-content th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.article-content td {
+    background-color: #fff;
+}
+
+/* Stile responsivo per tabelle su schermi piccoli */
+@media (max-width: 768px) {
+    .article-content table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .article-content th,
+    .article-content td {
+        display: block;
+        text-align: left;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .article-content th {
+        background-color: #e9ecef;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .article-content tr {
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .article-content td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 120px;
+        color: #333;
+    }
 }

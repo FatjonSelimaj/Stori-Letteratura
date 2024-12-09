@@ -1,70 +1,85 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ArticleDetail.css";
-import { FaShareAlt, FaTimes, FaFacebook, FaWhatsapp, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope } from "react-icons/fa";
 
-type ArticleDetail = {
-  title: string;
-  extract: string;
-  image?: string;
+const cleanHTML = (html: string): string => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+
+  // Rimuove i link "modifica"
+  doc.querySelectorAll('a[href*="action=edit"]').forEach((el) => el.remove());
+  doc.querySelectorAll("a").forEach((el) => {
+    if (el.textContent?.toLowerCase().includes("modifica")) {
+      el.remove();
+    }
+  });
+
+  // Disabilita tutti i link rendendoli non cliccabili
+  doc.querySelectorAll("a").forEach((link) => {
+    link.removeAttribute("href");
+    link.style.pointerEvents = "none";
+    link.style.color = "#888";
+    link.style.textDecoration = "none";
+    link.style.cursor = "default";
+  });
+
+  return doc.body.innerHTML;
 };
 
-const PersonaggioDettaglio: React.FC = () => {
+const ArticleDetail: React.FC = () => {
   const { pageid } = useParams<{ pageid: string }>();
-  const [article, setArticle] = useState<ArticleDetail | null>(null);
+  const [articleHTML, setArticleHTML] = useState<string | null>(null);
+  const [title, setTitle] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showSharePopup, setShowSharePopup] = useState<boolean>(false); // Stato per popup condivisione
+  const [error, setError] = useState<string | null>(null);
+  const [showSharePopup, setShowSharePopup] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchArticleDetail = async () => {
-      if (!pageid) {
-        console.error("PageID non fornito.");
-        setLoading(false);
-        return;
-      }
+    if (!pageid) {
+      setError("Nessun ID articolo fornito.");
+      setLoading(false);
+      return;
+    }
 
+    const fetchArticleDetails = async () => {
       try {
+        setLoading(true);
+        setError(null);
+
         const response = await axios.get("https://it.wikipedia.org/w/api.php", {
           params: {
-            action: "query",
+            action: "parse",
             format: "json",
-            prop: "extracts|pageimages",
-            exintro: true,
-            explaintext: true,
-            pageids: pageid,
-            piprop: "original",
+            pageid: pageid,
             origin: "*",
+            prop: "text|displaytitle",
           },
         });
 
-        const page = response.data.query?.pages?.[pageid];
-
-        if (page) {
-          setArticle({
-            title: page.title,
-            extract: page.extract || "Nessuna descrizione disponibile.",
-            image: page.original?.source,
-          });
+        const page = response.data.parse;
+        if (!page) {
+          setError("Articolo non trovato.");
         } else {
-          console.error("Articolo non trovato.");
-          setArticle(null);
+          setTitle(page.title);
+          setArticleHTML(cleanHTML(page.text["*"]));
         }
       } catch (error) {
-        console.error("Errore durante il recupero dei dettagli:", error);
-        setArticle(null);
+        console.error("Errore durante il recupero dell'articolo:", error);
+        setError("Impossibile caricare l'articolo.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchArticleDetail();
+    fetchArticleDetails();
   }, [pageid]);
 
   const handleShare = (platform: string) => {
     const url = window.location.href;
-    const text = `Dai un'occhiata a questo interessante articolo: ${article?.title}`;
+    const text = `Leggi questo interessante articolo: ${title}`;
     switch (platform) {
       case "facebook":
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
@@ -77,13 +92,13 @@ const PersonaggioDettaglio: React.FC = () => {
         break;
       case "email":
         window.location.href = `mailto:?subject=${encodeURIComponent(
-          `Articolo interessante: ${article?.title}`
+          `Articolo interessante: ${title}`
         )}&body=${encodeURIComponent(`Leggi l'articolo completo qui: ${url}`)}`;
         break;
       default:
         break;
     }
-    setShowSharePopup(false); // Chiudi il popup
+    setShowSharePopup(false);
   };
 
   if (loading) {
@@ -94,10 +109,11 @@ const PersonaggioDettaglio: React.FC = () => {
     );
   }
 
-  if (!article) {
+  if (error) {
     return (
-      <div className="no-article">
-        <p>Dettagli non disponibili.</p>
+      <div className="error">
+        <p>{error}</p>
+        <button onClick={() => navigate(-1)}>Torna indietro</button>
       </div>
     );
   }
@@ -107,13 +123,11 @@ const PersonaggioDettaglio: React.FC = () => {
       <button className="back-button" onClick={() => navigate(-1)}>
         Torna indietro
       </button>
-      <h1>{article.title}</h1>
-      {article.image && (
-        <img src={article.image} alt={article.title} className="article-image" />
-      )}
-      <p className="article-extract">{article.extract}</p>
-
-      {/* Icona Condividi */}
+      <h1>{title}</h1>
+      <div
+        className="article-content"
+        dangerouslySetInnerHTML={{ __html: articleHTML || "" }}
+      />
       <div className="share-section">
         <FaShareAlt className="share-icon" onClick={() => setShowSharePopup(true)} />
         {showSharePopup && (
@@ -125,16 +139,16 @@ const PersonaggioDettaglio: React.FC = () => {
               </div>
               <p>Condividi questo articolo su:</p>
               <div className="share-options">
-                <button className="facebook" onClick={() => handleShare("facebook")}>
+                <button onClick={() => handleShare("facebook")}>
                   <FaFacebook /> Facebook
                 </button>
-                <button className="whatsapp" onClick={() => handleShare("whatsapp")}>
+                <button onClick={() => handleShare("whatsapp")}>
                   <FaWhatsapp /> WhatsApp
                 </button>
-                <button className="twitter" onClick={() => handleShare("twitter")}>
+                <button onClick={() => handleShare("twitter")}>
                   <FaTwitter /> Twitter
                 </button>
-                <button className="email" onClick={() => handleShare("email")}>
+                <button onClick={() => handleShare("email")}>
                   <FaEnvelope /> Email
                 </button>
               </div>
@@ -146,4 +160,4 @@ const PersonaggioDettaglio: React.FC = () => {
   );
 };
 
-export default PersonaggioDettaglio;
+export default ArticleDetail;

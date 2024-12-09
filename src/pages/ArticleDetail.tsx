@@ -1,55 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ArticleDetail.css";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope } from "react-icons/fa";
 
+const cleanHTML = (html: string): string => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+
+  // Rimuove i link "modifica"
+  doc.querySelectorAll('a[href*="action=edit"]').forEach((el) => el.remove());
+  doc.querySelectorAll("a").forEach((el) => {
+    if (el.textContent?.toLowerCase().includes("modifica")) {
+      el.remove();
+    }
+  });
+
+  // Disabilita tutti i link rendendoli non cliccabili
+  doc.querySelectorAll("a").forEach((link) => {
+    link.removeAttribute("href"); // Rimuove l'attributo href per disattivare il comportamento del link
+    link.style.pointerEvents = "none"; // Disabilita il clic
+    link.style.color = "#888"; // Cambia il colore per indicare che il link non è attivo
+    link.style.textDecoration = "none"; // Rimuove la sottolineatura
+    link.style.cursor = "default"; // Cambia il cursore a uno standard
+  });
+
+  return doc.body.innerHTML; // Restituisce l'HTML modificato
+};
+
 const ArticleDetail: React.FC = () => {
   const { pageid } = useParams<{ pageid: string }>();
-  const [article, setArticle] = useState<any | null>(null);
+  const [articleHTML, setArticleHTML] = useState<string | null>(null);
+  const [title, setTitle] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showSharePopup, setShowSharePopup] = useState(false); // Stato per il popup di condivisione
+  const [error, setError] = useState<string | null>(null);
+  const [showSharePopup, setShowSharePopup] = useState(false);
   const navigate = useNavigate();
 
-  const fetchArticleDetails = async () => {
-    try {
-      const response = await axios.get(`https://it.wikipedia.org/w/api.php`, {
-        params: {
-          action: "query",
-          format: "json",
-          prop: "extracts|pageimages|categories|info",
-          explaintext: true,
-          redirects: 1,
-          origin: "*",
-          pageids: pageid,
-          piprop: "original",
-          cllimit: "max",
-          inprop: "url",
-        },
-      });
-
-      const page = Object.values(response.data.query.pages)[0] as any;
-
-      setArticle({
-        title: page.title,
-        content: page.extract,
-        image: page.original?.source || "",
-      });
-    } catch (error) {
-      console.error("Errore durante il recupero dell'articolo:", error);
-      setArticle(null);
-    } finally {
+  useEffect(() => {
+    if (!pageid) {
+      setError("Nessun ID articolo fornito.");
       setLoading(false);
+      return;
+    }
+
+    const fetchArticleDetails = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await axios.get("https://it.wikipedia.org/w/api.php", {
+          params: {
+            action: "parse",
+            format: "json",
+            pageid: pageid,
+            origin: "*",
+            prop: "text|displaytitle",
+          },
+        });
+
+        const page = response.data.parse;
+        if (!page) {
+          setError("Articolo non trovato.");
+        } else {
+          setTitle(page.title);
+          setArticleHTML(cleanHTML(page.text["*"]));
+        }
+      } catch (error) {
+        console.error("Errore durante il recupero dell'articolo:", error);
+        setError("Impossibile caricare l'articolo.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticleDetails();
+  }, [pageid]);
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLAnchorElement;
+    if (target.tagName === "A") {
+      const href = target.getAttribute("href");
+      if (href?.startsWith("/article/")) {
+        e.preventDefault(); // Previene il comportamento predefinito del link
+        const newTitle = href.replace("/article/", ""); // Estrae il titolo dell'articolo
+        navigate(`/article/${newTitle}`); // Naviga verso il nuovo articolo
+      }
     }
   };
 
-  React.useEffect(() => {
-    fetchArticleDetails();
-  },);
-
   const handleShare = (platform: string) => {
     const url = window.location.href;
-    const text = `Leggi questo interessante articolo: ${article?.title}`;
+    const text = `Leggi questo interessante articolo: ${title}`;
     switch (platform) {
       case "facebook":
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
@@ -62,13 +104,13 @@ const ArticleDetail: React.FC = () => {
         break;
       case "email":
         window.location.href = `mailto:?subject=${encodeURIComponent(
-          `Articolo interessante: ${article?.title}`
+          `Articolo interessante: ${title}`
         )}&body=${encodeURIComponent(`Leggi l'articolo completo qui: ${url}`)}`;
         break;
       default:
         break;
-    };
-    setShowSharePopup(false); // Chiudi il popup dopo la selezione
+    }
+    setShowSharePopup(false);
   };
 
   if (loading) {
@@ -79,10 +121,11 @@ const ArticleDetail: React.FC = () => {
     );
   }
 
-  if (!article) {
+  if (error) {
     return (
-      <div className="no-article">
-        <p>Articolo non trovato!</p>
+      <div className="error">
+        <p>{error}</p>
+        <button onClick={() => navigate(-1)}>Torna indietro</button>
       </div>
     );
   }
@@ -92,13 +135,12 @@ const ArticleDetail: React.FC = () => {
       <button className="back-button" onClick={() => navigate(-1)}>
         Torna indietro
       </button>
-      <h1>{article.title}</h1>
-      {article.image && <img src={article.image} alt={article.title} className="article-image" />}
-      <div className="article-content">
-        <p>{article.content}</p>
-      </div>
-
-      {/* Icona Condividi */}
+      <h1>{title}</h1>
+      <div
+        className="article-content"
+        dangerouslySetInnerHTML={{ __html: articleHTML || "" }}
+        onClick={handleLinkClick} // Aggiungi il gestore dei clic
+      />
       <div className="share-section">
         <FaShareAlt className="share-icon" onClick={() => setShowSharePopup(true)} />
         {showSharePopup && (
