@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "typescript": "^4.9.5",
-    "vite": "^6.0.3",
     "webpack": "^5.97.1"
   }
 }
