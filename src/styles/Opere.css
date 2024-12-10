@@ -2,12 +2,19 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
+    text-align: center;
+    /* Per centrare il contenuto */
 }
 
 .cards-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
+    /* Usa Flexbox per gestire il layout */
+    flex-wrap: wrap;
+    /* Permette alle card di andare su più righe */
+    justify-content: center;
+    /* Centra le card orizzontalmente */
     gap: 20px;
+    /* Spaziatura tra le card */
     padding: 20px;
 }
 
@@ -18,19 +25,26 @@
     padding: 20px;
     color: white;
     text-align: left;
+    max-width: 300px;
+    /* Limita la larghezza delle card */
+    width: 100%;
+    /* Si adatta alla larghezza disponibile */
 }
 
 /* Colori distintivi per le card */
 .card.seconda-guerra {
-    background-color: #dc3545; /* Rosso */
+    background-color: #dc3545;
+    /* Rosso */
 }
 
 .card.rivoluzione-francese {
-    background-color: #ffc107; /* Giallo */
+    background-color: #ffc107;
+    /* Giallo */
 }
 
 .card.scoperta-america {
-    background-color: #17a2b8; /* Blu chiaro */
+    background-color: #17a2b8;
+    /* Blu chiaro */
 }
 
 .card:hover {
@@ -56,4 +70,19 @@
 
 .card-link:hover {
     text-decoration: underline;
+}
+
+/* Stile responsivo */
+@media (max-width: 768px) {
+    .cards-list {
+        flex-direction: column;
+        /* Dispone le card in colonna */
+        align-items: center;
+        /* Centra le card verticalmente */
+    }
+
+    .card {
+        max-width: 90%;
+        /* Le card occupano il 90% della larghezza disponibile */
+    }
 }
