@@ -11,6 +11,7 @@ import OpereLetterarie from "./components/OpereLetterarie";
 import OperaDettaglio from "./pages/OperaDettaglio";
 import EventiStorici from "./components/EventiStorici";
 import EventoDettaglio from "./pages/EventiDetaglio";
+import { Analytics } from "@vercel/analytics/react";
 
 // Componente per il bottone "Torna alla Home"
 const BackToHomeButton: React.FC = () => {
@@ -76,6 +77,7 @@ const AppContent: React.FC = () => {
 function App() {
   return (
     <Router>
+      <Analytics /> {/* Integrazione di Vercel Analytics */}
       <AppContent />
     </Router>
   );
