@@ -61,11 +61,18 @@ const Home: React.FC = () => {
             type="text"
             placeholder="Cerca qualcosa..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setQuery(value);
+              if (value.trim() === "") {
+                setResults([]); // Cancella i risultati quando il campo è vuoto
+              }
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSearch(); // Esegue la ricerca premendo Invio
             }}
           />
+
           <button onClick={handleSearch} title="Cerca">
             <FaSearch />
           </button>

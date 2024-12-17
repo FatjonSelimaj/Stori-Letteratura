@@ -15,7 +15,6 @@ body {
 }
 
 .home-container {
-    background: rgba(255, 255, 255, 0.9);
     /* Sfondo bianco semi-trasparente per il contenuto */
     border-radius: 10px;
     padding: 20px;
@@ -154,3 +153,81 @@ body {
     font-size: 1.2rem;
     /* Dimensione icona */
 }
+
+/* Risultati della ricerca */
+.search-results {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    /* Sfondo bianco semi-trasparente */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Georgia", serif;
+}
+
+.search-results h2 {
+    font-size: 1.8rem;
+    color: #8b4513;
+    /* Marrone storico */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results li {
+    background: linear-gradient(to right, #fdf8f3, #f5e8d8);
+    border: 1px solid #d3c8b4;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.search-results li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.search-results li strong {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    /* Testo scuro */
+    display: block;
+    margin-bottom: 5px;
+}
+
+.search-results li p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.home-header h1 {
+    font-size: 3rem;
+    color: #b22222; /* Rosso scuro */
+    text-align: center;
+    font-family: "Garamond", serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombra nera per maggiore contrasto */
+    margin-bottom: 10px;
+}
+
+.home-header p {
+    font-size: 1.2rem;
+    color: #ffffff; /* Bianco puro */
+    text-align: center;
+    font-family: "Georgia", serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Ombra nera per leggibilità */
+    margin-top: 10px;
+}
+

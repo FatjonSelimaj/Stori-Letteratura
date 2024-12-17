@@ -64,3 +64,13 @@
   outline: 2px solid #ffffff;
   outline-offset: 2px;
 }
+
+.App-header h1 {
+  font-size: 3rem;
+  color: #ffffff; /* Rosso scuro */
+  text-align: center;
+  font-family: "Garamond", serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombra per maggiore contrasto */
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
