@@ -120,9 +120,6 @@ const OperaDettaglio: React.FC = () => {
 
   return (
     <div className="detail-container">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        Torna indietro
-      </button>
       <h1>{title}</h1>
       <div
         className="detail-content"

@@ -35,24 +35,6 @@
     margin-bottom: 20px;
 }
 
-/* Pulsante Indietro */
-.back-button {
-    background-color: #0056b3;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-bottom: 20px;
-}
-
-.back-button:hover {
-    background-color: #003f7f;
-    color: #ffffff;
-}
-
 /* Sezione Condivisione */
 .share-section {
     margin-top: 20px;

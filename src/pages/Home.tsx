@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Home.css";
+import { FaSearch } from "react-icons/fa";
 
 const Home: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -58,11 +59,16 @@ const Home: React.FC = () => {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="Cerca..."
+            placeholder="Cerca qualcosa..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSearch(); // Esegue la ricerca premendo Invio
+            }}
           />
-          <button onClick={handleSearch}>Cerca</button>
+          <button onClick={handleSearch} title="Cerca">
+            <FaSearch />
+          </button>
         </div>
 
         {/* Risultati di ricerca */}
@@ -79,19 +85,6 @@ const Home: React.FC = () => {
             </ul>
           </div>
         )}
-
-        {/* Banner */}
-        <div className="home-banner">
-          <img
-            src="/image/logo.jpg"
-            alt="Storia e Letteratura"
-            className="home-banner-image"
-          />
-          <blockquote>
-            <p>"Non c'è storia senza memoria, né letteratura senza anima."</p>
-            <cite>- Anonimo</cite>
-          </blockquote>
-        </div>
 
         {/* Sezioni tematiche */}
         <div className="home-sections">

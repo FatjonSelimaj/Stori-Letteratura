@@ -1,178 +1,156 @@
-.home-container {
-    font-family: "Arial", sans-serif;
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #fff7e6, #e6dac4);
+    /* Sfondo sfumato tra crema e beige */
+    background-image: url("../../public/image/logo.jpg");
+    /* Immagine dello sfondo */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* Sfondo fisso durante lo scroll */
     color: #333;
-    /* Colore scuro per migliorare il contrasto */
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
 }
 
-.home-header {
-    text-align: center;
-    margin-bottom: 30px;
+.home-container {
+    background: rgba(255, 255, 255, 0.9);
+    /* Sfondo bianco semi-trasparente per il contenuto */
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .home-header h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #2c3e50;
-    /* Blu scuro */
-}
-
-.home-header p {
-    font-size: 1.2rem;
-    color: #555;
-    /* Grigio scuro per migliorare il contrasto */
-}
-
-.home-banner {
-    position: relative;
-    margin-bottom: 40px;
+    text-align: center;
+    font-family: "Garamond", serif;
+    /* Font serif classico */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .home-banner img {
-    width: 100%;
-    border-radius: 10px;
+    border: 5px solid #f0e6d2;
+    /* Bordo crema antico */
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .home-banner blockquote {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: #fff;
-    /* Testo bianco per migliorare il contrasto */
-    font-style: italic;
-    background: rgba(0, 0, 0, 0.7);
-    /* Sfondo scuro con opacità aumentata */
-    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    /* Sfondo trasparente scuro */
+    color: #f0e6d2;
+    /* Testo crema antico */
+    font-family: "Georgia", serif;
+    padding: 15px 20px;
     border-radius: 5px;
-    transition: all 0.3s ease;
-    /* Transizione per un cambiamento fluido */
-}
-
-.home-banner blockquote cite {
-    display: block;
-    margin-top: 5px;
-    font-size: 0.9rem;
-    text-align: right;
-    color: #ccc;
-    /* Colore più chiaro per il nome dell'autore */
 }
 
 .home-sections {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
+    padding: 20px;
 }
 
 .home-section {
-    background-color: #f9f9f9;
+    background: linear-gradient(to bottom, #f9f7f4, #ebe6dc);
+    /* Sfumatura bianco antico */
+    border: 1px solid #d3c8b4;
+    /* Bordo classico */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .home-section h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: #2c3e50;
-    /* Blu scuro */
     margin-bottom: 10px;
-}
-
-.home-section p {
-    font-size: 1rem;
-    color: #555;
-    /* Grigio scuro per migliorare il contrasto */
-    margin-bottom: 15px;
+    font-family: "Garamond", serif;
 }
 
 .home-section a {
     text-decoration: none;
     color: #0056b3;
-    /* Blu scuro per i link */
     font-weight: bold;
     border: 1px solid #0056b3;
-    /* Bordo dello stesso colore del testo */
-    padding: 5px 10px;
+    padding: 8px 15px;
     border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .home-section a:hover {
     background-color: #003f7f;
-    /* Colore di sfondo scuro per hover */
     color: #fff;
-    /* Testo bianco */
-}
-
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
 }
 
 .search-bar input {
-    width: 300px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+    width: 100%;
+    max-width: 400px;
+    /* Larghezza massima */
+    padding: 12px 20px 12px 45px;
+    /* Spazio per l'icona */
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    /* Bordo arrotondato */
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Barra di ricerca */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 500px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    outline: none;
+    background: transparent;
 }
 
 .search-bar button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #0056b3;
-    /* Blu brillante */
-    color: #fff;
-    /* Testo bianco */
+    background: #0056b3;
+    /* Colore blu */
+    color: white;
     border: none;
-    border-radius: 5px;
+    padding: 12px 20px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
 }
 
 .search-bar button:hover {
     background-color: #003f7f;
-    /* Colore più scuro per hover */
+    /* Blu più scuro */
 }
 
-.search-results {
-    margin-top: 20px;
-}
-
-.search-results ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.search-results li {
-    margin-bottom: 15px;
-    cursor: pointer;
-    color: #333;
-    /* Colore del testo */
-}
-
-.search-results li:hover {
-    background-color: #f0f0f0;
-    /* Sfondo più chiaro */
-    padding: 5px;
-    border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-    .home-banner {
-        margin-bottom: 80px;
-    }
-
-    .home-banner blockquote {
-        position: static;
-        /* Posizionamento fluido */
-        margin-top: 10px;
-        background: rgba(0, 0, 0, 0.8);
-        /* Sfondo più scuro */
-        text-align: center;
-        max-width: 90%;
-        margin: 10px auto;
-        padding: 15px 20px;
-    }
+.search-bar button svg {
+    font-size: 1.2rem;
+    /* Dimensione icona */
 }

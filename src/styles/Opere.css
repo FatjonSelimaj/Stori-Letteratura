@@ -3,73 +3,101 @@
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
-    /* Per centrare il contenuto */
+    background: rgba(255, 255, 255, 0.95);
+    /* Sfondo leggermente trasparente */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .cards-list {
     display: flex;
-    /* Usa Flexbox per gestire il layout */
     flex-wrap: wrap;
-    /* Permette alle card di andare su più righe */
     justify-content: center;
     /* Centra le card orizzontalmente */
-    gap: 20px;
-    /* Spaziatura tra le card */
+    gap: 25px;
+    /* Aumenta lo spazio tra le card */
     padding: 20px;
 }
 
+/* Stile per le card */
 .card {
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: linear-gradient(to bottom, #fdf8f3, #f5e8d8);
+    /* Sfumatura chiara */
+    border: 1px solid #d3c8b4;
+    /* Bordo delicato */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     padding: 20px;
-    color: white;
-    text-align: left;
     max-width: 300px;
-    /* Limita la larghezza delle card */
     width: 100%;
-    /* Si adatta alla larghezza disponibile */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    color: #333;
+    /* Testo nero */
 }
 
 /* Colori distintivi per le card */
 .card.seconda-guerra {
-    background-color: #dc3545;
-    /* Rosso */
+    background: linear-gradient(to bottom, #dc3545, #c82333);
+    /* Rosso sfumato */
 }
 
 .card.rivoluzione-francese {
-    background-color: #ffc107;
-    /* Giallo */
+    background: linear-gradient(to bottom, #ffc107, #e0a800);
+    /* Giallo dorato */
 }
 
 .card.scoperta-america {
-    background-color: #17a2b8;
-    /* Blu chiaro */
+    background: linear-gradient(to bottom, #17a2b8, #138496);
+    /* Blu turchese */
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #fff7e6;
+    /* Cambia leggermente lo sfondo al passaggio */
 }
 
+/* Titoli delle card */
 .card h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 10px;
+    font-family: "Garamond", serif;
+    color: #8b4513;
+    /* Marrone storico */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* Testo delle card */
 .card p {
     font-size: 1rem;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-family: "Georgia", serif;
+    color: #555;
+    /* Grigio scuro */
 }
 
+/* Link della card */
 .card-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #0056b3;
+    /* Blu scuro */
+    color: #ffffff;
     text-decoration: none;
-    color: blue;
     font-weight: bold;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .card-link:hover {
-    text-decoration: underline;
+    background-color: #003f7f;
+    /* Blu più scuro */
+    transform: translateY(-3px);
 }
 
 /* Stile responsivo */
@@ -83,6 +111,6 @@
 
     .card {
         max-width: 90%;
-        /* Le card occupano il 90% della larghezza disponibile */
+        /* Card più larghe nei dispositivi piccoli */
     }
 }

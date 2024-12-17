@@ -3,66 +3,88 @@
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .cards-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Centra le card orizzontalmente */
+    justify-content: center;
     gap: 20px;
 }
 
+/* Stile per le card */
 .card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #f5e8d8; /* Colore beige uniforme */
+    border: 1px solid #d3c8b4; /* Bordo classico */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
     max-width: 300px;
-    width: 100%; /* Per occupare l'intera larghezza nei dispositivi più piccoli */
+    width: 100%;
     text-align: center;
+    color: black; /* Testo nero */
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .card h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    font-family: "Garamond", serif;
     margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .card p {
     font-size: 1rem;
-    color: #555;
     margin-bottom: 15px;
+    line-height: 1.6;
+    font-family: "Georgia", serif;
+    color: black;
 }
 
+/* Bottone Leggi di più */
 .card-link {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #fff;
-    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: #ffffff; /* Bianco per contrasto */
+    color: #0056b3; /* Blu storico */
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .card-link:hover {
-    background-color: black;
+    background-color: #d3c8b4; /* Beige classico */
+    color: #5a2d14; /* Marrone scuro */
+    transform: translateY(-3px);
 }
 
+/* Effetto caricamento e nessun articolo */
 .loading,
 .no-articles {
     text-align: center;
     font-size: 1.5rem;
-    color: #555;
+    color: #5a2d14;
     padding: 20px;
 }
 
-/* Stile responsivo */
+/* Responsive design */
 @media (max-width: 768px) {
     .cards-list {
-        flex-direction: column; /* Le card si dispongono in colonna */
-        align-items: center;   /* Centra le card verticalmente */
+        flex-direction: column;
+        align-items: center;
     }
 
     .card {
-        max-width: 90%; /* Card più larghe nei dispositivi piccoli */
+        max-width: 90%;
     }
 }

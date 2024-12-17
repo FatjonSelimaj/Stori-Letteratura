@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { FaYoutube, FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 import "./styles/App.css";
 import Home from "./pages/Home";
@@ -12,22 +12,7 @@ import OperaDettaglio from "./pages/OperaDettaglio";
 import EventiStorici from "./components/EventiStorici";
 import EventoDettaglio from "./pages/EventiDetaglio";
 import { Analytics } from "@vercel/analytics/react";
-
-// Componente per il bottone "Torna alla Home"
-const BackToHomeButton: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  if (location.pathname === "/") {
-    return null;
-  }
-
-  return (
-    <button className="back-to-home" onClick={() => navigate("/")}>
-      Torna alla Home
-    </button>
-  );
-};
+import { BackToHomeButton, BackButton } from "./components/Buttons"; // Pulsanti con le icone
 
 // Componente principale dell'app
 const AppContent: React.FC = () => {
@@ -37,8 +22,14 @@ const AppContent: React.FC = () => {
     <div className="App">
       <header className="App-header">
         {location.pathname === "/" && <h1>Benvenuti su Storia e Letteratura</h1>}
-        <BackToHomeButton />
+        {location.pathname !== "/" && (
+          <div className="navigation-buttons">
+            <BackButton />
+            <BackToHomeButton />
+          </div>
+        )}
       </header>
+
       <main className="App-content">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -52,19 +43,20 @@ const AppContent: React.FC = () => {
           <Route path="/eventi-storici/:pageid" element={<EventoDettaglio />} />
         </Routes>
       </main>
+
       <footer className="App-footer">
         <p>© {new Date().getFullYear()} Storia e Letteratura. Tutti i diritti riservati.</p>
         <div className="social-links">
-          <a href="https://youtube.com/@storiarletteratura?si=s4WrmdEfTlOoBddg" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
             <FaYoutube className="social-icon youtube" />
           </a>
-          <a href="https://www.instagram.com/storia.letteratura?igsh=MXRzZHY1dHNpbWo2Mw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <FaInstagram className="social-icon instagram" />
           </a>
-          <a href="https://www.facebook.com/share/5CRUGhzH5SYj4iiL/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <FaFacebook className="social-icon facebook" />
           </a>
-          <a href="https://www.tiktok.com/@fatjon.selima?_t=8pX8jPc9uT2&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
             <FaTiktok className="social-icon tiktok" />
           </a>
         </div>
@@ -77,7 +69,7 @@ const AppContent: React.FC = () => {
 function App() {
   return (
     <Router>
-      <Analytics /> {/* Integrazione di Vercel Analytics */}
+      <Analytics />
       <AppContent />
     </Router>
   );

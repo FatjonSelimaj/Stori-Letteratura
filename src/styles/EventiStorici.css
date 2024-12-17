@@ -3,84 +3,96 @@
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
-    /* Per centrare i titoli e altre informazioni */
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .cards-list {
     display: flex;
     flex-wrap: wrap;
-    /* Permette alle card di andare su più righe */
-    justify-content: center;
-    /* Centra le card orizzontalmente */
+    justify-content: center; /* Centra le card orizzontalmente */
     gap: 20px;
     padding: 20px;
 }
 
 .card {
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: linear-gradient(to bottom, #fdf8f3, #f5e8d8); /* Sfumatura crema */
+    border: 1px solid #d3c8b4; /* Bordo sottile classico */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     padding: 20px;
-    color: white;
-    text-align: left;
     max-width: 300px;
     width: 100%;
-    /* Garantisce che la card si adatti alla larghezza del contenitore */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Titoli delle card */
+.card h2 {
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+    font-family: "Garamond", serif;
+    color: #8b4513; /* Marrone storico */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Paragrafi delle card */
+.card p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-family: "Georgia", serif;
+    color: #333; /* Testo nero */
+}
+
+/* Link alla card */
+.card-link {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #0056b3; /* Blu scuro */
+    color: #ffffff; /* Testo bianco */
+    font-weight: bold;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-link:hover {
+    background-color: #003f7f; /* Blu più scuro */
+    transform: translateY(-3px);
 }
 
 /* Colori distintivi per le card */
 .card.seconda-guerra {
-    background-color: #dc3545;
-    /* Rosso */
+    background: linear-gradient(to bottom, #dc3545, #c82333); /* Rosso con sfumatura */
+    color: black;
 }
 
 .card.rivoluzione-francese {
-    background-color: #ffc107;
-    /* Giallo */
+    background: linear-gradient(to bottom, #ffc107, #e0a800); /* Giallo dorato */
+    color: black;
 }
 
 .card.scoperta-america {
-    background-color: #17a2b8;
-    /* Blu chiaro */
+    background: linear-gradient(to bottom, #17a2b8, #138496); /* Blu turchese */
+    color: black;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: red;
-}
-
-.card p {
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-.card-link {
-    text-decoration: none;
-    color: blue;
-    font-weight: bold;
-}
-
-.card-link:hover {
-    text-decoration: underline;
-}
-
-/* Stile responsivo */
+/* Effetto responsive */
 @media (max-width: 768px) {
     .cards-list {
         flex-direction: column;
-        /* Le card si dispongono in colonna */
         align-items: center;
-        /* Centra le card verticalmente */
     }
 
     .card {
-        max-width: 90%;
-        /* Le card occupano il 90% della larghezza disponibile */
+        max-width: 90%; /* Adatta la larghezza sui dispositivi piccoli */
     }
 }

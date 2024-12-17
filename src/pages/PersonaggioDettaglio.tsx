@@ -120,9 +120,6 @@ const ArticleDetail: React.FC = () => {
 
   return (
     <div className="article-detail">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        Torna indietro
-      </button>
       <h1>{title}</h1>
       <div
         className="article-content"
