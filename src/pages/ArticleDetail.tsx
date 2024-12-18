@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ArticleDetail.css";
-import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope, FaLink } from "react-icons/fa";
 
 const cleanHTML = (html: string): string => {
   const parser = new DOMParser();
@@ -10,22 +10,17 @@ const cleanHTML = (html: string): string => {
 
   // Rimuove i link "modifica"
   doc.querySelectorAll('a[href*="action=edit"]').forEach((el) => el.remove());
-  doc.querySelectorAll("a").forEach((el) => {
-    if (el.textContent?.toLowerCase().includes("modifica")) {
-      el.remove();
-    }
-  });
 
-  // Disabilita tutti i link rendendoli non cliccabili
+  // Disabilita tutti i link
   doc.querySelectorAll("a").forEach((link) => {
-    link.removeAttribute("href"); // Rimuove l'attributo href per disattivare il comportamento del link
-    link.style.pointerEvents = "none"; // Disabilita il clic
-    link.style.color = "#888"; // Cambia il colore per indicare che il link non è attivo
-    link.style.textDecoration = "none"; // Rimuove la sottolineatura
-    link.style.cursor = "default"; // Cambia il cursore a uno standard
+    link.removeAttribute("href");
+    link.style.pointerEvents = "none";
+    link.style.color = "#888";
+    link.style.textDecoration = "none";
+    link.style.cursor = "default";
   });
 
-  return doc.body.innerHTML; // Restituisce l'HTML modificato
+  return doc.body.innerHTML;
 };
 
 const ArticleDetail: React.FC = () => {
@@ -35,6 +30,7 @@ const ArticleDetail: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [showSharePopup, setShowSharePopup] = useState(false);
+  const [copiedMessage, setCopiedMessage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,8 +43,6 @@ const ArticleDetail: React.FC = () => {
     const fetchArticleDetails = async () => {
       try {
         setLoading(true);
-        setError(null);
-
         const response = await axios.get("https://it.wikipedia.org/w/api.php", {
           params: {
             action: "parse",
@@ -67,7 +61,6 @@ const ArticleDetail: React.FC = () => {
           setArticleHTML(cleanHTML(page.text["*"]));
         }
       } catch (error) {
-        console.error("Errore durante il recupero dell'articolo:", error);
         setError("Impossibile caricare l'articolo.");
       } finally {
         setLoading(false);
@@ -77,21 +70,10 @@ const ArticleDetail: React.FC = () => {
     fetchArticleDetails();
   }, [pageid]);
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLAnchorElement;
-    if (target.tagName === "A") {
-      const href = target.getAttribute("href");
-      if (href?.startsWith("/article/")) {
-        e.preventDefault(); // Previene il comportamento predefinito del link
-        const newTitle = href.replace("/article/", ""); // Estrae il titolo dell'articolo
-        navigate(`/article/${newTitle}`); // Naviga verso il nuovo articolo
-      }
-    }
-  };
-
   const handleShare = (platform: string) => {
     const url = window.location.href;
     const text = `Leggi questo interessante articolo: ${title}`;
+
     switch (platform) {
       case "facebook":
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
@@ -103,32 +85,23 @@ const ArticleDetail: React.FC = () => {
         window.open(`https://api.whatsapp.com/send?text=${text} ${url}`, "_blank");
         break;
       case "email":
-        window.location.href = `mailto:?subject=${encodeURIComponent(
-          `Articolo interessante: ${title}`
-        )}&body=${encodeURIComponent(`Leggi l'articolo completo qui: ${url}`)}`;
+        window.location.href = `mailto:?subject=${encodeURIComponent(`Articolo interessante: ${title}`)}&body=${encodeURIComponent(`Leggi l'articolo completo qui: ${url}`)}`;
+        break;
+      case "copy":
+        navigator.clipboard.writeText(url).then(() => {
+          setCopiedMessage(true);
+          setTimeout(() => setCopiedMessage(false), 2000); // Mostra per 2 secondi
+        });
         break;
       default:
         break;
     }
-    setShowSharePopup(false);
+
+    setShowSharePopup(false); // Chiude il popup
   };
 
-  if (loading) {
-    return (
-      <div className="loading">
-        <p>Caricamento in corso...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error">
-        <p>{error}</p>
-        <button onClick={() => navigate(-1)}>Torna indietro</button>
-      </div>
-    );
-  }
+  if (loading) return <div className="loading"><p>Caricamento in corso...</p></div>;
+  if (error) return <div className="error"><p>{error}</p><button onClick={() => navigate(-1)}>Torna indietro</button></div>;
 
   return (
     <div className="article-detail">
@@ -136,7 +109,6 @@ const ArticleDetail: React.FC = () => {
       <div
         className="article-content"
         dangerouslySetInnerHTML={{ __html: articleHTML || "" }}
-        onClick={handleLinkClick} // Aggiungi il gestore dei clic
       />
       <div className="share-section">
         <FaShareAlt className="share-icon" onClick={() => setShowSharePopup(true)} />
@@ -161,11 +133,19 @@ const ArticleDetail: React.FC = () => {
                 <button onClick={() => handleShare("email")}>
                   <FaEnvelope /> Email
                 </button>
+                <button onClick={() => handleShare("copy")}>
+                  <FaLink /> Copia Link
+                </button>
               </div>
             </div>
           </div>
         )}
       </div>
+      {copiedMessage && (
+        <div className="toast-message">
+          Link copiato negli appunti!
+        </div>
+      )}
     </div>
   );
 };

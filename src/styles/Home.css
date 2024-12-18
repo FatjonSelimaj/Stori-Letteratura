@@ -9,8 +9,6 @@ body {
     /* Immagine dello sfondo */
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    /* Sfondo fisso durante lo scroll */
     color: #333;
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ArticleDetail.css";
-import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope, FaLink } from "react-icons/fa";
 
 const cleanHTML = (html: string): string => {
   const parser = new DOMParser();
@@ -36,6 +36,7 @@ const ArticleDetail: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showSharePopup, setShowSharePopup] = useState(false);
   const navigate = useNavigate();
+  const [copiedMessage, setCopiedMessage] = useState(false);
 
   useEffect(() => {
     if (!pageid) {
@@ -95,6 +96,12 @@ const ArticleDetail: React.FC = () => {
           `Articolo interessante: ${title}`
         )}&body=${encodeURIComponent(`Leggi l'articolo completo qui: ${url}`)}`;
         break;
+      case "copy":
+        navigator.clipboard.writeText(url).then(() => {
+          setCopiedMessage(true);
+          setTimeout(() => setCopiedMessage(false), 2000); // Mostra per 2 secondi
+        });
+        break;
       default:
         break;
     }
@@ -148,11 +155,19 @@ const ArticleDetail: React.FC = () => {
                 <button onClick={() => handleShare("email")}>
                   <FaEnvelope /> Email
                 </button>
+                <button onClick={() => handleShare("copy")}>
+                  <FaLink /> Copia Link
+                </button>
               </div>
             </div>
           </div>
         )}
       </div>
+      {copiedMessage && (
+        <div className="toast-message">
+          Link copiato negli appunti!
+        </div>
+      )}
     </div>
   );
 };

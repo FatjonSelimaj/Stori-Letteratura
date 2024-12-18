@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/OpereDettaglio.css";
-import { FaShareAlt, FaTimes, FaFacebook, FaWhatsapp, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { FaShareAlt, FaTimes, FaFacebook, FaWhatsapp, FaTwitter, FaEnvelope, FaLink } from "react-icons/fa";
 
 const cleanHTML = (html: string): string => {
   const parser = new DOMParser();
@@ -36,6 +36,7 @@ const OperaDettaglio: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showSharePopup, setShowSharePopup] = useState(false);
   const navigate = useNavigate();
+  const [copiedMessage, setCopiedMessage] = useState(false);
 
   useEffect(() => {
     if (!pageid) {
@@ -90,10 +91,11 @@ const OperaDettaglio: React.FC = () => {
       case "whatsapp":
         window.open(`https://api.whatsapp.com/send?text=${text} ${url}`, "_blank");
         break;
-      case "email":
-        window.location.href = `mailto:?subject=${encodeURIComponent(
-          `Opera interessante: ${title}`
-        )}&body=${encodeURIComponent(`Leggi l'opera completa qui: ${url}`)}`;
+      case "copy":
+        navigator.clipboard.writeText(url).then(() => {
+          setCopiedMessage(true);
+          setTimeout(() => setCopiedMessage(false), 2000); // Mostra per 2 secondi
+        });
         break;
       default:
         break;
@@ -149,11 +151,19 @@ const OperaDettaglio: React.FC = () => {
                 <button onClick={() => handleShare("email")}>
                   <FaEnvelope /> Email
                 </button>
+                <button onClick={() => handleShare("copy")}>
+                  <FaLink /> Copia Link
+                </button>
               </div>
             </div>
           </div>
         )}
       </div>
+      {copiedMessage && (
+        <div className="toast-message">
+          Link copiato negli appunti!
+        </div>
+      )}
     </div>
   );
 };
