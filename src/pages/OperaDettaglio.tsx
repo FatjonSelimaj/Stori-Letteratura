@@ -10,22 +10,58 @@ const cleanHTML = (html: string): string => {
 
   // Rimuove i link "modifica"
   doc.querySelectorAll('a[href*="action=edit"]').forEach((el) => el.remove());
-  doc.querySelectorAll("a").forEach((el) => {
-    if (el.textContent?.toLowerCase().includes("modifica")) {
-      el.remove();
+
+  // Disabilita tutti i link (ma li lascia visibili)
+  doc.querySelectorAll("a").forEach((link) => {
+    if (link instanceof HTMLElement) {
+      link.removeAttribute("href");
+      link.style.pointerEvents = "none";
+      link.style.color = "#888";
+      link.style.textDecoration = "none";
+      link.style.cursor = "default";
     }
   });
 
-  // Disabilita tutti i link rendendoli non cliccabili
-  doc.querySelectorAll("a").forEach((link) => {
-    link.removeAttribute("href");
-    link.style.pointerEvents = "none";
-    link.style.color = "#888";
-    link.style.textDecoration = "none";
-    link.style.cursor = "default";
+  // Rimuove tabelle, liste non ordinate e liste ordinate
+  doc.querySelectorAll("table, ul, ol").forEach((el) => el.remove());
+
+  // Rimuove sezioni vuote o non significative
+  const unwantedSections = ["Note", "Bibliografia", "Voci correlate", "Altri progetti", "Collegamenti esterni"];
+  doc.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((header) => {
+    if (header instanceof HTMLElement) {
+      const parentSection = header.closest("div, section, article");
+      if (unwantedSections.includes(header.textContent?.trim() || "")) {
+        if (parentSection) {
+          parentSection.remove(); // Rimuove l'intera sezione se è vuota
+        }
+      }
+    }
+  });
+
+  // Mantiene solo testo e titoli
+  doc.querySelectorAll("div, section, article").forEach((element) => {
+    preserveTextAndTitles(element);
   });
 
   return doc.body.innerHTML;
+};
+
+// Funzione per mantenere solo testo e titoli
+const preserveTextAndTitles = (element: Element): void => {
+  const childNodes = Array.from(element.childNodes);
+
+  childNodes.forEach((child) => {
+    if (child.nodeType === Node.ELEMENT_NODE) {
+      const childElement = child as HTMLElement;
+
+      // Mantiene solo i titoli (h1-h6) e il testo
+      if (!/^H[1-6]$/i.test(childElement.tagName) && childElement.nodeName !== "P") {
+        childElement.remove(); // Rimuove tutti gli altri elementi
+      }
+    } else if (child.nodeType !== Node.TEXT_NODE) {
+      child.remove(); // Rimuove nodi non di testo
+    }
+  });
 };
 
 const OperaDettaglio: React.FC = () => {
