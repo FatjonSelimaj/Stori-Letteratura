@@ -123,6 +123,13 @@ const Home: React.FC = () => {
               Scopri di più
             </Link>
           </div>
+          <div className="home-section">
+            <h2>Calendario</h2>
+            <p>Ripercorri gli eventi che hanno segnato l'umanità.</p>
+            <Link to="/vintagewidget" className="home-link">
+              Scopri di più
+            </Link>
+          </div>
         </div>
       </main>
     </div>

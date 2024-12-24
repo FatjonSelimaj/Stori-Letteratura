@@ -13,6 +13,7 @@ import EventiStorici from "./components/EventiStorici";
 import EventoDettaglio from "./pages/EventiDetaglio";
 import { Analytics } from "@vercel/analytics/react";
 import { BackToHomeButton, BackButton } from "./components/Buttons"; // Pulsanti con le icone
+import VintageWidget from "./pages/VintageWidget";
 
 // Componente principale dell'app
 const AppContent: React.FC = () => {
@@ -41,6 +42,7 @@ const AppContent: React.FC = () => {
           <Route path="/opere-letterarie/:pageid" element={<OperaDettaglio />} />
           <Route path="/eventi-storici" element={<EventiStorici />} />
           <Route path="/eventi-storici/:pageid" element={<EventoDettaglio />} />
+          <Route path="/vintagewidget" element={<VintageWidget />} />
         </Routes>
       </main>
 
