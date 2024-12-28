@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../styles/VintageWidget.css";
 
 type CalendarDate = {
@@ -21,6 +22,7 @@ const VintageWidget: React.FC = () => {
         year: new Date().getFullYear(),
     });
 
+    const navigate = useNavigate();
     const today = new Date();
 
     const calculateEaster = (year: number): Date => {
@@ -167,11 +169,20 @@ const VintageWidget: React.FC = () => {
         return () => clearInterval(interval);
     }, []);
 
+        // Funzione per gestire il clic sull'evento
+        const handleEventClick = () => {
+            navigate("/day-detail"); // Cambia con il percorso configurato per la pagina DayDetail
+        };
+
     return (
         <div className="vintage-widget">
             <div className="time-display">{currentTime}</div>
             <div className="date-display">{today.toLocaleDateString()}</div>
-            <div className="event-display">
+            <div
+                className="event-display"
+                onClick={handleEventClick} // Aggiunge il comportamento cliccabile
+                style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }} // Stile per evidenziare che è cliccabile
+            >
                 {loading ? "Caricamento evento storico..." : historicalEvent}
             </div>
 

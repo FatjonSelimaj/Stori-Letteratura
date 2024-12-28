@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ArticleList from "../components/ArticleList";
+import ArticleList from "./ArticleList";
 
 type Article = {
   title: string;

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/OpereDettaglio.css";
-import { FaShareAlt, FaTimes, FaFacebook, FaWhatsapp, FaTwitter, FaEnvelope, FaLink } from "react-icons/fa";
+import { FaShareAlt, FaTimes, FaFacebook, FaWhatsapp, FaTwitter, FaEnvelope, FaLink, FaDownload } from "react-icons/fa";
+import { jsPDF } from "jspdf";
 
 const cleanHTML = (html: string): string => {
   const parser = new DOMParser();
@@ -24,19 +25,6 @@ const cleanHTML = (html: string): string => {
 
   // Rimuove tabelle, liste non ordinate e liste ordinate
   doc.querySelectorAll("table, ul, ol").forEach((el) => el.remove());
-
-  // Rimuove sezioni vuote o non significative
-  const unwantedSections = ["Note", "Bibliografia", "Voci correlate", "Altri progetti", "Collegamenti esterni"];
-  doc.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((header) => {
-    if (header instanceof HTMLElement) {
-      const parentSection = header.closest("div, section, article");
-      if (unwantedSections.includes(header.textContent?.trim() || "")) {
-        if (parentSection) {
-          parentSection.remove(); // Rimuove l'intera sezione se è vuota
-        }
-      }
-    }
-  });
 
   // Mantiene solo testo e titoli
   doc.querySelectorAll("div, section, article").forEach((element) => {
@@ -114,6 +102,47 @@ const OperaDettaglio: React.FC = () => {
     fetchOperaDetails();
   }, [pageid]);
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    const margin = 10;
+    const pageHeight = doc.internal.pageSize.height;
+    let currentY = margin;
+
+    // Aggiunge il titolo
+    if (title) {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      const titleLines = doc.splitTextToSize(title, 180);
+      titleLines.forEach((line: string | string[]) => {
+        if (currentY + 10 > pageHeight - margin) {
+          doc.addPage();
+          currentY = margin;
+        }
+        doc.text(line, margin, currentY);
+        currentY += 10;
+      });
+    }
+
+    // Aggiunge il contenuto dell'opera
+    if (operaHTML) {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = operaHTML;
+      const cleanText = tempDiv.textContent || tempDiv.innerText || "";
+      const contentLines = doc.splitTextToSize(cleanText, 180);
+
+      contentLines.forEach((line: string | string[]) => {
+        if (currentY + 10 > pageHeight - margin) {
+          doc.addPage();
+          currentY = margin;
+        }
+        doc.text(line, margin, currentY);
+        currentY += 10;
+      });
+    }
+
+    doc.save(`${title || "opera"}.pdf`);
+  };
+
   const handleShare = (platform: string) => {
     const url = window.location.href;
     const text = `Leggi questa interessante opera: ${title}`;
@@ -166,6 +195,19 @@ const OperaDettaglio: React.FC = () => {
 
       <div className="share-section">
         <FaShareAlt className="share-icon" onClick={() => setShowSharePopup(true)} />
+        <button
+          onClick={handleDownloadPDF}
+          className="pdf-download-button"
+          title="Scarica PDF"
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "1.5rem",
+          }}
+        >
+          <FaDownload />
+        </button>
         {showSharePopup && (
           <div className="share-overlay">
             <div className="share-popup">

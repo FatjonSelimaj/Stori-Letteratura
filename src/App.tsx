@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import { FaYoutube, FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 import "./styles/App.css";
 import Home from "./pages/Home";
-import ArticlesPage from "./pages/ArticlePage";
+import ArticlesPage from "./components/ArticlePage";
 import ArticleDetail from "./pages/ArticleDetail";
 import PersonaggiStorici from "./components/PersonaggiStorici";
 import PersonaggioDettaglio from "./pages/PersonaggioDettaglio";
@@ -14,6 +14,7 @@ import EventoDettaglio from "./pages/EventiDetaglio";
 import { Analytics } from "@vercel/analytics/react";
 import { BackToHomeButton, BackButton } from "./components/Buttons"; // Pulsanti con le icone
 import VintageWidget from "./pages/VintageWidget";
+import DayDetail from "./pages/DayDetail";
 
 // Componente principale dell'app
 const AppContent: React.FC = () => {
@@ -43,6 +44,8 @@ const AppContent: React.FC = () => {
           <Route path="/eventi-storici" element={<EventiStorici />} />
           <Route path="/eventi-storici/:pageid" element={<EventoDettaglio />} />
           <Route path="/vintagewidget" element={<VintageWidget />} />
+          <Route path="/day-detail" element={<DayDetail />} />
+          <Route path="/day-detail/:pageid" element={<DayDetail />} />
         </Routes>
       </main>
 

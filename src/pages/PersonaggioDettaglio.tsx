@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ArticleDetail.css";
-import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope, FaLink } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaWhatsapp, FaShareAlt, FaTimes, FaEnvelope, FaLink, FaDownload } from "react-icons/fa";
+import { jsPDF } from "jspdf";
 
 const cleanHTML = (html: string): string => {
   const parser = new DOMParser();
@@ -114,6 +115,47 @@ const ArticleDetail: React.FC = () => {
     fetchArticleDetails();
   }, [pageid]);
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    const margin = 10;
+    const pageHeight = doc.internal.pageSize.height;
+    let currentY = margin;
+
+    // Aggiunge il titolo
+    if (title) {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      const titleLines = doc.splitTextToSize(title, 180);
+      titleLines.forEach((line: string | string[]) => {
+        if (currentY + 10 > pageHeight - margin) {
+          doc.addPage();
+          currentY = margin;
+        }
+        doc.text(line, margin, currentY);
+        currentY += 10;
+      });
+    }
+
+    // Aggiunge il contenuto dell'articolo
+    if (articleHTML) {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = articleHTML;
+      const cleanText = tempDiv.textContent || tempDiv.innerText || "";
+      const contentLines = doc.splitTextToSize(cleanText, 180);
+
+      contentLines.forEach((line: string | string[]) => {
+        if (currentY + 10 > pageHeight - margin) {
+          doc.addPage();
+          currentY = margin;
+        }
+        doc.text(line, margin, currentY);
+        currentY += 10;
+      });
+    }
+
+    doc.save(`${title || "articolo"}.pdf`);
+  };
+
   const handleShare = (platform: string) => {
     const url = window.location.href;
     const text = `Leggi questo interessante articolo: ${title}`;
@@ -170,6 +212,19 @@ const ArticleDetail: React.FC = () => {
       />
       <div className="share-section">
         <FaShareAlt className="share-icon" onClick={() => setShowSharePopup(true)} />
+        <button
+          onClick={handleDownloadPDF}
+          className="pdf-download-button"
+          title="Scarica PDF"
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "1.5rem",
+          }}
+        >
+          <FaDownload />
+        </button>
         {showSharePopup && (
           <div className="share-overlay">
             <div className="share-popup">
